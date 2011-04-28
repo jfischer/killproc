@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='killproc',
-    version='1.0.0',
+    version='1.0.1',
     author='Jeff Fischer',
     author_email='jeffrey.fischer@genforma.com',
     url='https://github.com/jfischer/killproc',
@@ -16,4 +16,10 @@ setup(
     license='Apache V2.0',
     description='Kill unix processes by name',
     long_description=open('README.rst').read(),
+    classifiers=[
+    "Environment :: Console",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: POSIX",
+    "Topic :: System :: Systems Administration"
+    ],
     )
