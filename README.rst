@@ -8,8 +8,8 @@ Introduction
 *kill* command identifies processes by process id, rather than by process name. For example, to terminate instances of the django-admin.py script, one might use the following sequence::
 
   $  ps -ef | grep django-admin.py | grep -v grep
-  501 20060     1   0   0:00.11 ttys001    0:00.38 python /Users/jfischer/apps/python/bin/django-admin.py runserver 0.0.0.0:8002
-  501 20063 20060   0   0:00.35 ttys001    0:01.07 python /Users/jfischer/apps/python/bin/django-admin.py runserver 0.0.0.0:8002
+  501 20060     1   0   0:00.11 ttys001    0:00.38 python django-admin.py runserver 0.0.0.0:8002
+  501 20063 20060   0   0:00.35 ttys001    0:01.07 python django-admin.py runserver 0.0.0.0:8002
   $ kill -TERM 20060 20063
   $ ps -ef | grep django-admin.py | grep -v grep
 
@@ -22,10 +22,10 @@ match, the user is prompted whether they wish to terminate the process (the prom
 off via a command line option). Accomplishing the above task with *killproc* might look as follows::
 
   killproc django-admin.py
-  python /Users/jfischer/apps/python/bin/django-admin.py runserver 0.0.0.0:8002
+  python django-admin.py runserver 0.0.0.0:8002
   Kill process 20106? [y] y
   Sending signal SIGTERM to process 20106
-  python /Users/jfischer/apps/python/bin/django-admin.py runserver 0.0.0.0:8002
+  python django-admin.py runserver 0.0.0.0:8002
   Kill process 20109? [y] y
   Sending signal SIGTERM to process 20109
   Sent signal SIGTERM to 2 processes
