@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Copyright 2011 by Jeff Fischer
 # This utility is made available under the Apache V2.0 license,
 # see http://www.apache.org/licenses/LICENSE-2.0.html
@@ -10,7 +10,7 @@ from signal import SIGKILL, SIGTERM, NSIG
 from optparse import OptionParser
 
 
-if sys.platform == 'linux2':
+if sys.platform == 'linux':
   psargs = '-ef'
   pid_field = 1
   cmd_field = 7
@@ -25,6 +25,8 @@ def get_matching_processes(process_name, this_program=sys.argv[0]):
                                stderr=subprocess.STDOUT)
     result = []
     for line in subproc.stdout:
+        line = line.decode("utf-8")
+        print(line)
         if (line.find(process_name) != -1):
             if line.find(this_program) != -1:
                 continue
@@ -38,7 +40,7 @@ def get_signal_name(signal_no):
         SIGKILL: "SIGKILL",
         SIGTERM: "SIGTERM"
     }
-    if signal_names.has_key(signal_no):
+    if signal_no in signal_names:
         return signal_names[signal_no]
     else:
         return str(signal_no)
@@ -49,16 +51,16 @@ def kill_procs_interactive(process_name, signal_no):
     if len(matches)>0:
         cnt = 0
         for (pid, cmd) in matches:
-            print "%s" % cmd
-            data = raw_input("Kill process %d? [y]" % pid)
+            print("%s" % cmd)
+            data = input("Kill process %d? [y]" % pid)
             if len(data)==0 or data[0]=="Y" or data[0]=="y":
-                print "Sending signal %s to process %d" % (signame, pid)
+                print("Sending signal %s to process %d" % (signame, pid))
                 os.kill(pid, signal_no)
                 cnt = cnt + 1
-        print "Sent signal %s to %d processes" % (signame, cnt)
+        print("Sent signal %s to %d processes" % (signame, cnt))
         return 0
     else:
-        print "No matches for pattern '%s'" % process_name
+        print("No matches for pattern '%s'" % process_name)
         return 1
 
 
@@ -67,13 +69,13 @@ def kill_procs_noninteractive(process_name, signal_no):
     if len(matches)>0:
         cnt = 0
         for (pid, cmd) in matches:
-            print "[%d] %s" % (pid, cmd)
+            print("[%d] %s" % (pid, cmd))
             os.kill(pid, signal_no)
             cnt = cnt + 1
-        print "Sent signal %s to %d processes" % (get_signal_name(signal_no), cnt)
+        print("Sent signal %s to %d processes" % (get_signal_name(signal_no), cnt))
         return 0
     else:
-        print "No matches for pattern '%s'" % process_name
+        print("No matches for pattern '%s'" % process_name)
         return 1
 
 
